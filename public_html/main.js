@@ -22,7 +22,8 @@ function genera_tabla() {
     var body = document.getElementsByTagName("body")[0];
 
     // Crea un elemento <table> y un elemento <tbody>
-    var tabla   = document.createElement("table");
+    var tabla = document.createElement("table");
+    tabla.setAttribute("class", "table");
     var tblBody = document.createElement("tbody");
   
     var hilera = document.createElement("tr");
