@@ -9,7 +9,7 @@ window.onload = function(){
 };
 
 var character = [
-    {id:1, name: "Isaac", hp:6,armor:0, black:0, bombs:1, items:105, nameImage:"PlayerName_01_Isaac.png", portrait: "PlayerPortrait_01_Isaac.png", bigportrait:"PlayerPortraitBig_01_Isaac.png", costume:-1, skinColor:-1, canShoot:true},
+    {id:1, name: "Isaac", hp:6, armor:0, black:0, bombs:1, items:105, nameImage:"PlayerName_01_Isaac.png", portrait: "PlayerPortrait_01_Isaac.png", bigportrait:"PlayerPortraitBig_01_Isaac.png", costume:-1, skinColor:-1, canShoot:true},
     {id:2, name: "Magdalene", hp:8, armor:0, black:0, bombs:1, items:45, nameImage:"PlayerName_02_Magdalene.png", portrait: "PlayerPortrait_02_Magdalene.png", bigportrait:"PlayerPortraitBig_02_Magdalene.png", costume:-1, skinColor:-1, canShoot:true}
 ];
 
@@ -27,11 +27,11 @@ function genera_tabla() {
     var tblBody = document.createElement("tbody");
   
     var hilera = document.createElement("tr");
-    for (var j = 0; j < titulo.length; j++) {
-      var celda = document.createElement("td");
-      var textoCelda = document.createTextNode(titulo[j]);
-      celda.appendChild(textoCelda);
-      hilera.appendChild(celda);
+    for (var i = 0; i < titulo.length; i++) {
+        var celda = document.createElement("td");
+        var textoCelda = document.createTextNode(titulo[i]);
+        celda.appendChild(textoCelda);
+        hilera.appendChild(celda);
     }
     tblBody.appendChild(hilera);
     
@@ -40,8 +40,17 @@ function genera_tabla() {
         var characterValue = Object.values(character[i]);
         for (i = 0; i < characterValue.length; i++){
             var celda = document.createElement("td");
-            var textoCelda = document.createTextNode(characterValue[i]);
-            celda.appendChild(textoCelda);
+            
+            if(i == 7 || i == 8 || i == 9){
+                var img = document.createElement("img");
+                img.setAttribute("src", "gfx/");
+            }else{
+                var textoCelda = document.createTextNode(characterValue[i]);
+                celda.appendChild(textoCelda);
+            }
+            
+            
+            
             hilera.appendChild(celda);
         }
         tblBody.appendChild(hilera);
