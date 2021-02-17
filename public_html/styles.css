@@ -9,9 +9,14 @@ and open the template in the editor.
 */
 @font-face { font-family: Upheaval; src: url('upheavtt.ttf'); } 
 
+
 * {
     font-family: Upheaval;
+    background-color: lightcoral;
+    /*background-image: url(gfx/bground.png);*/
 }
+
+
 
 .table {
     width: 100%;
@@ -25,11 +30,12 @@ and open the template in the editor.
     border : 1px solid black;
     text-align: center;
     padding: 8px;
-    font-size: 22px;
+    font-size: 23px;
+    color: white;
 }
 
 .table td {
-    font-size: 19px;
+    font-size: 20px;
 }
 
 .button {
@@ -67,15 +73,30 @@ input.check {
 }
 
 .form input{
-    width: 100px;
+    width: 110px;
     padding: 5px;
-    margin: 5px;
+    margin: 5px 2px;
 }
+
+/* ~~~PLACEHOLDER~~~*/
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: white;
+}
+/**/
 
 
 .form select{
-    width: 114px;
+    width: 124px;
     padding: 5px;
-    margin: 5px;
+    margin: 5px 2px;
 }
 
