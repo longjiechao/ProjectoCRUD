@@ -48,3 +48,23 @@ and open the template in the editor.
     background-color: gray;
     border-color: gray;
 }
+
+input.check {
+    height: 20px;
+    margin: 0;
+    
+}
+
+.form input{
+    width: 100px;
+    padding: 5px;
+    margin: 5px;
+}
+
+
+.form select{
+    width: 114px;
+    padding: 5px;
+    margin: 5px;
+}
+
