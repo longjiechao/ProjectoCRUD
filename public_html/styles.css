@@ -7,6 +7,11 @@ and open the template in the editor.
     Created on : Feb 10, 2021, 7:21:03 PM
     Author     : Sophia Patrice
 */
+@font-face { font-family: Upheaval; src: url('upheavtt.ttf'); } 
+
+* {
+    font-family: Upheaval;
+}
 
 .table {
     width: 100%;
