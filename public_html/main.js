@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+//\d(:\d)?
+//(B\d)?(K\d)?(C\d)?
+
 window.onload = function(){
     genera_tabla();
 };
