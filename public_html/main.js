@@ -9,12 +9,12 @@ window.onload = function(){
 };
 
 var character = [
-    {id:1, name: "Isaac", hp:6, armor:0, black:0, bombs:1, items:105, nameImage:"playername_01_isaac.png", bigportrait:"playerportraitbig_01_isaac.png", costume:-1, skinColor:-1, canShoot:true, canFly:false},
-    {id:2, name: "Magdalene", hp:8, armor:0, black:0, bombs:1, items:45, nameImage:"playername_02_magdalene.png", bigportrait:"playerportraitbig_02_magdalene.png", costume:-1, skinColor:-1, canShoot:true, canFly:false}
+    {id:1, name: "Isaac", hp:6, bombs:1, items:105, nameImage:"playername_01_isaac.png", bigportrait:"playerportraitbig_01_isaac.png", costume:"Default", skinColor:-1, canShoot:true, canFly:false},
+    {id:2, name: "Magdalene", hp:8, bombs:1, items:45, nameImage:"playername_02_magdalene.png", bigportrait:"playerportraitbig_02_magdalene.png", costume:"Default", skinColor:-1, canShoot:true, canFly:false}
 ];
 
 var titulo = [
-    "ID", "Name", "HP", "Armor", "Black", "Bombs", "Items", "Image's Name", "Portrait", "Costume",  "Skin Color", "Shoot", "Fly"
+    "ID", "Name", "HP", "Consumables", "Items", "Image's Name", "Portrait", "Costume",  "Skin Color", "Shoot", "Fly"
 ];
 
 function genera_tabla() {
@@ -42,12 +42,12 @@ function genera_tabla() {
             var celda = document.createElement("td");
             
             switch(i){
-                case 7:
+                case 5:
                     var img = document.createElement("img");
                     img.src = "gfx/nameImage/"+characterValue[i];
                     celda.appendChild(img);
                     break;
-                case 8:
+                case 6:
                     var img = document.createElement("img");
                     img.src = "gfx/playerPortrairBig/"+characterValue[i];
                     celda.appendChild(img);
