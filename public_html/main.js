@@ -14,7 +14,7 @@ var character = [
 ];
 
 var titulo = [
-    "id", "name", "hp", "armor", "black", "bombs", "items", "nameImage", "portrait", "costume",  "skinColor", "canShoot", "canFly"
+    "ID", "Name", "HP", "Armor", "Black", "Bombs", "Items", "Image's Name", "Portrait", "Costume",  "Skin Color", "Shoot", "Fly"
 ];
 
 function genera_tabla() {
@@ -28,7 +28,7 @@ function genera_tabla() {
   
     var tr = document.createElement("tr");
     for (var i = 0; i < titulo.length; i++) {
-        var celda = document.createElement("td");
+        var celda = document.createElement("th");
         var text = document.createTextNode(titulo[i]);
         celda.appendChild(text);
         tr.appendChild(celda);
