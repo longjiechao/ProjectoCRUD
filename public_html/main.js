@@ -5,12 +5,15 @@
  */
 
 document.getElementById("insertbt").addEventListener("click", guardar_informacion);
+document.getElementById("deletebt").addEventListener("click", borrar_tabla);
+document.getElementById("showbt").addEventListener("click", genera_tabla);
 
 window.onload = function(){
     genera_tabla();
     indexID.setCurID();
 };
 
+//gestiona el tema del ID
 var indexID = {
     id : 0,
     getID : function(){
@@ -22,6 +25,7 @@ var indexID = {
     addID : function(){
         this.id++;
     },
+    //busca el id maximo actual +1
     setCurID : function(){
         var max = 0;
         if(character != null){
@@ -36,22 +40,26 @@ var indexID = {
     }
 };
 
+//array json donde se guarda las entradas
 var character = [
     {id:1, name: "Isaac", hp:6, consumable:1, items:105, nameImage:"playername_01_isaac.png", portrait:"playerportraitbig_01_isaac.png", costume:"Default", skinColor:-1, canShoot:true, canFly:false},
     {id:2, name: "Magdalene", hp:8, consumable:1, items:45, nameImage:"playername_02_magdalene.png", portrait:"playerportraitbig_02_magdalene.png", costume:"Default", skinColor:-1, canShoot:true, canFly:false}
 ];
 
+//array de los keys para el array json
 var jsonKey = [
     "id", "name", "hp", "consumable", "items", "nameImage", "portrait", "costume", "skinColor", "canShoot", "canfly"
 ]
 
+//array para mostrar en la tabla commo titulo
 var titulo = [
     "ID", "Name", "HP", "Consumables", "Items", "Image's Name", "Portrait", "Costume",  "Skin Color", "Shoot", "Fly"
 ];
 
+//genera la tabla en el div de tabla
 function genera_tabla() {
     // Obtener la referencia del elemento body
-    var body = document.getElementsByTagName("body")[0];
+    var div = document.getElementById("table");
 
     // Crea un elemento <table> y un elemento <tbody>
     var tabla = document.createElement("table");
@@ -100,7 +108,7 @@ function genera_tabla() {
     }
     
     tabla.appendChild(tbody);
-    body.appendChild(tabla);
+    div.appendChild(tabla);
     
     
     // modifica el atributo "border" de la tabla y lo fija a "2";
@@ -109,7 +117,7 @@ function genera_tabla() {
 
 //Borra la tabla
 function borrar_tabla(){
-    
+    document.getElementById("table").innerHTML = "";
 }
 
 //coge todo del formulario y lo pone en el JSON
