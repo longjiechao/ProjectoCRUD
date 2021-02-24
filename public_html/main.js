@@ -124,22 +124,24 @@ function borrar_tabla(){
 function guardar_informacion(){
     var insertForm = document.getElementById("insert").firstElementChild.children;
     var newRegistro = {};
-    for (i = 0; i < insertForm.length; i++){
+    for (i = 0; i < insertForm.length+1; i++){
         switch(i){
             case 0:
-                newRegistro[jsonKey[i]] = indexID.getID();
+                newRegistro[jsonKey[i-1]] = indexID.getID();
                 indexID.addID();
                 break;
             case 8: 
             case 9:
-                newRegistro[jsonKey[i]] = insertForm[i].checked;
+                newRegistro[jsonKey[i-1]] = insertForm[i-1].checked;
                 break;
             default:
-                newRegistro[jsonKey[i]] = insertForm[i].value;
+                newRegistro[jsonKey[i-1]] = insertForm[i-1].value;
                 break;
         }
-        
+        if(i != 0) console.log("I: " + i + "key: " + jsonKey[i-1] + "  value: " + insertForm[i-1].value);
     }
+    console.log(newRegistro);
     character.push(newRegistro);
     console.log(character);
+    console.log(insertForm);
 }
