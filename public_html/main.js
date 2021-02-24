@@ -44,8 +44,8 @@ var indexID = {
 
 //array json donde se guarda las entradas
 var character = [
-    {id:1, name: "Isaac", hp:6, consumable:1, items:105, nameImage:"playername_01_isaac.png", portrait:"playerportraitbig_01_isaac.png", costume:"Default", skinColor:-1, canShoot:true, canFly:false},
-    {id:2, name: "Magdalene", hp:8, consumable:1, items:45, nameImage:"playername_02_magdalene.png", portrait:"playerportraitbig_02_magdalene.png", costume:"Default", skinColor:-1, canShoot:true, canFly:false}
+    {id:1, name: "Isaac", hp:6, consumable:1, items:105, nameImage:"playername_01_isaac.png", portrait:"playerportraitbig_01_isaac.png", costume:-1, skinColor:"Default", canShoot:true, canFly:false},
+    {id:2, name: "Magdalene", hp:8, consumable:1, items:45, nameImage:"playername_02_magdalene.png", portrait:"playerportraitbig_02_magdalene.png", costume:-1, skinColor:"Default", canShoot:true, canFly:false}
 ];
 
 //array de los keys para el array json
@@ -176,7 +176,8 @@ function generar_form(){
     //Costume
     input = document.createElement("input");
     input.name = "info";
-    input.type = "text";
+    input.type = "number";
+    input.min = -1;
     input.placeholder = "Costume";
     form.appendChild(input);
     
@@ -230,7 +231,7 @@ function generar_form(){
     input.class = "check";
     input.type = "checkbox";
     form.appendChild(input);
-    form.appendChild(document.createTextNode("can"));
+    form.appendChild(document.createTextNode("canFly"));
     
     form.appendChild(document.createElement("br"));
     
@@ -281,7 +282,6 @@ function borrar_entrada(){
 //coge todo del formulario y lo pone en el JSON
 function guardar_informacion(){
     var insertForm = document.getElementsByName("info");
-    
     console.log(insertForm);
     
     var newRegistro = {};
@@ -291,13 +291,14 @@ function guardar_informacion(){
                 newRegistro[jsonKey[i-1]] = indexID.getID();
                 indexID.addID();
                 break;
-            case 8: 
-            case 9:
+            case 9: 
+            case 10:
                 newRegistro[jsonKey[i-1]] = insertForm[i-1].checked;
                 break;
             default:
                 var insert = insertForm[i-1].value;
                 insert = insert.replace(/^.*\\/, "");
+                console.log(insert);
                 newRegistro[jsonKey[i-1]] = insert;
                 break;
         }
@@ -308,4 +309,3 @@ function guardar_informacion(){
     console.log(character);
     console.log(insertForm);
 }
-
