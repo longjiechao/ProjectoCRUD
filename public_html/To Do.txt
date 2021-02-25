@@ -12,8 +12,7 @@ Objetivo 1:
 			Toda la información se guarda en un array JSON
 			Todos debe tener un campo autonumerico (ID)
 			Debe tener tener campos obligatios (min 3) y otras opcionales
-			REGEX (min 2)
-			EVENTS (min 3, 2 de raton y 1 de teclado)
+			REGEX (min 2)																	*[falta ponerlo, el regex está preparado]*
 			Al guardar, se borra el formulario y se genera la tabla
 	Doble click
 		Elimina la entrada
@@ -21,15 +20,14 @@ Objetivo 1:
 			NO se puede borrar la tabla y volver a crearla	
 	NO boton refresh
 
-Objetivo 2:
-	DIV de modificar entrada
-	Borrar tabla y generar el formulario
+Objetivo 2:																					-{PREGUNTAR por si acaso}-
+	DIV de modificar entrada																*[falta]*
+	Borrar tabla y generar el formulario													*[falta]*
 
-Objetivo 3:
-	Dentro de un regisre JSON, debe tener otro Array JSON
-	Nuevo DIV
+Objetivo 3:																					-{DUDAS, mi no entender}-
+	Dentro de un regisre JSON, debe tener otro Array JSON									*[falta]*
+	Nuevo DIV											
 		Muestra el registro principal
 		Boton para crear mas sub-registros
 		Boton para mostrar la tabla principal (?)
 		Doble Click borrar sub-registros
-		

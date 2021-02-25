@@ -6,12 +6,10 @@
 //      (\d{0,4})?(,\d{0,4})*
 //      \d(:\d)?
 //      (B\d)?(K\d)?(C\d)?
-document.getElementById("deletebt").addEventListener("click", borrar_tabla);
-document.getElementById("showbt").addEventListener("click", generar_tabla);
+
 
 window.onload = function(){
-    generar_tabla();
-    generar_form();
+    que_tabla_generar();
     indexID.setCurID();
 };
 
@@ -58,6 +56,34 @@ var titulo = [
     "ID", "Name", "HP", "Consumables", "Items", "Image's Name", "Portrait", "Costume",  "Skin Color", "Shoot", "Fly"
 ];
 
+//decide que tabla generar
+function que_tabla_generar(){
+    borrar_form();
+    if(poder_generar_tabla()){
+        generar_tabla_vacia();
+    }else{
+        generar_tabla();
+    }
+}
+
+//comprueba si la se puede generar la tabla o no
+function poder_generar_tabla(){
+    if(character.length == 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+//funcion que se usa cuando el array json no hay entradas (excepto el primero)
+function generar_tabla_vacia(){
+    var div = document.getElementById("table");
+    var h3 = document.createElement("h3");
+    var text = document.createTextNode("No hay ningúna entrada, por favor inserte una");
+    h3.appendChild(text);
+    div.appendChild(h3);
+}
+
 //genera la tabla en el div de tabla
 function generar_tabla() {
     // Obtener la referencia del elemento body
@@ -83,28 +109,30 @@ function generar_tabla() {
         var tr = document.createElement("tr");
         var characterValue = Object.values(character[i]);
         for (i = 0; i < characterValue.length; i++){
-            var celda = document.createElement("td");
+            var td =  document.createElement("td");
             
             //El switch sirve para los imagenes
             switch(i){
                 case 5:
                     var img = document.createElement("img");
                     img.src = "gfx/nameImage/"+characterValue[i];
-                    celda.appendChild(img);
+                    img.style['pointer-events'] = 'none';
+                    td.appendChild(img);
                     break;
                 case 6:
                     var img = document.createElement("img");
                     img.src = "gfx/playerPortrairBig/"+characterValue[i];
-                    celda.appendChild(img);
+                    img.style['pointer-events'] = 'none';
+                    td.appendChild(img);
                     break;
                     
                 default:
                     var text = document.createTextNode(characterValue[i]);
-                    celda.appendChild(text);
+                    td.appendChild(text);
                     break;
             }
 
-            tr.appendChild(celda);
+            tr.appendChild(td);
         }
         tbody.appendChild(tr);
     }
@@ -113,7 +141,10 @@ function generar_tabla() {
     div.appendChild(tabla);
     
     //para generar los botones de borrar las entradas
-    borrar_entrada();
+//    borrar_entrada();
+    
+    //Recarga todos los eventos
+    loadAllEvents();
     
     // modifica el atributo "border" de la tabla y lo fija a "2";
     tabla.setAttribute("border", "2");
@@ -121,6 +152,7 @@ function generar_tabla() {
 
 //genera el formulario
 function generar_form(){
+    borrar_tabla();
     var div = document.getElementById("insert");
     var form = document.createElement("form");
     form.setAttribute("class", "form");
@@ -235,17 +267,33 @@ function generar_form(){
     
     form.appendChild(document.createElement("br"));
     
+    //boton de insertar
     button = document.createElement("button");
-    button.id = "insertbt";
     button.class = "button insert";
     button.addEventListener("click", guardar_informacion);
-    
-    //button.onsubmit = "return false;";
     button.type = "button";
-    
     text = document.createTextNode("Insert");
     button.appendChild(text);
     form.appendChild(button);
+    
+    //boton de resetear
+    button = document.createElement("button");
+    button.class = "button insert";
+    button.type = "reset";
+    text = document.createTextNode("Reset");
+    button.appendChild(text);
+    form.appendChild(button);
+    
+    //boton de cancelar
+    button = document.createElement("button");
+    button.class = "button insert";
+    button.addEventListener("click", que_tabla_generar);
+    button.type = "button";
+    text = document.createTextNode("Cancel");
+    button.appendChild(text);
+    form.appendChild(button);
+    
+    
     
     div.appendChild(form);
 }
@@ -266,24 +314,9 @@ function borrar_form(){
     }
 }
 
-//genera botones para borrar entrada
-function borrar_entrada(){
-    var tableChild = document.getElementById("table").childNodes;
-    for(i = 0; i < table.Child; i++){
-        console.log(tableChild[i]);
-        tableChild[i].addEventListener("click", function(e){
-            e.target.parentNode.removeChild(e.target);
-        });
-        
-    }
-    
-}
-
 //coge todo del formulario y lo pone en el JSON
 function guardar_informacion(){
     var insertForm = document.getElementsByName("info");
-    console.log(insertForm);
-    
     var newRegistro = {};
     for (i = 0; i < insertForm.length+1; i++){
         switch(i){
@@ -297,15 +330,13 @@ function guardar_informacion(){
                 break;
             default:
                 var insert = insertForm[i-1].value;
-                insert = insert.replace(/^.*\\/, "");
-                console.log(insert);
+                insert = insert.replace(/.*\\/, "");
                 newRegistro[jsonKey[i-1]] = insert;
                 break;
         }
         if(i != 0) console.log("I: " + i + "key: " + jsonKey[i-1] + "  value: " + insertForm[i-1].value);
     }
-    console.log(newRegistro);
     character.push(newRegistro);
-    console.log(character);
-    console.log(insertForm);
+    borrar_form();
+    que_tabla_generar();
 }
