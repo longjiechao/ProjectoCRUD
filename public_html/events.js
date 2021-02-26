@@ -3,8 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-document.getElementById("deletebt").addEventListener("click", generar_form);
-document.getElementById("showbt").addEventListener("click", que_tabla_generar);
 
 //recarga todos los eventos
 function loadAllEvents(){
@@ -26,6 +24,23 @@ function loadAllDeleteDoubleClick(){
                         generar_tabla_vacia();
                     }
                 }
+            }
+        });
+    }
+}
+
+function loadAllMod(){
+    var mod = document.getElementsByClassName("mod");
+    console.log(mod);
+    for(i = 0; i < mod.length; i++){
+        mod[i].addEventListener("keypress", function(e){
+            if(e.keyCode === 13){
+                var mod = document.getElementsByClassName("mod");
+               for(i = 0; i < mod.length; i++){
+                   if(mod[i] == e.target){
+                       console.log(i);
+                   }
+               }
             }
         });
     }

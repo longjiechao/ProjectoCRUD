@@ -11,6 +11,7 @@
 window.onload = function(){
     que_tabla_generar();
     indexID.setCurID();
+    loadAllMod();
 };
 
 //gestiona el tema del ID
@@ -82,6 +83,15 @@ function generar_tabla_vacia(){
     var text = document.createTextNode("No hay ningúna entrada, por favor inserte una");
     h3.appendChild(text);
     div.appendChild(h3);
+    
+    //boton de insertar
+    var button = document.createElement("button");
+    button.className = "button insert";
+    button.addEventListener("click", generar_form);
+    button.type = "button";
+    text = document.createTextNode("Insertar");
+    button.appendChild(text);
+    div.appendChild(button);
 }
 
 //genera la tabla en el div de tabla
@@ -113,6 +123,14 @@ function generar_tabla() {
             
             //El switch sirve para los imagenes
             switch(i){
+                case 0:
+                    var text = document.createTextNode(characterValue[i]);
+                    var button = document.createElement("button");
+                    button.appendChild(text);
+                    button.type = "button";
+                    button.className = "mod";
+                    td.appendChild(button);
+                    break;
                 case 5:
                     var img = document.createElement("img");
                     img.src = "gfx/nameImage/"+characterValue[i];
@@ -139,6 +157,15 @@ function generar_tabla() {
     
     tabla.appendChild(tbody);
     div.appendChild(tabla);
+    
+     //boton de insertar
+    var button = document.createElement("button");
+    button.className = "button insert";
+    button.addEventListener("click", generar_form);
+    button.type = "button";
+    text = document.createTextNode("Insertar");
+    button.appendChild(text);
+    div.appendChild(button);
     
     //para generar los botones de borrar las entradas
 //    borrar_entrada();
@@ -252,7 +279,7 @@ function generar_form(){
     //canShoot
     input = document.createElement("input");
     input.name = "info";
-    input.class = "check";
+    input.className = "check";
     input.type = "checkbox";
     form.appendChild(input);
     form.appendChild(document.createTextNode("canShoot"));
@@ -260,7 +287,7 @@ function generar_form(){
     //canFly
     input = document.createElement("input");
     input.name = "info";
-    input.class = "check";
+    input.className = "check";
     input.type = "checkbox";
     form.appendChild(input);
     form.appendChild(document.createTextNode("canFly"));
@@ -269,7 +296,7 @@ function generar_form(){
     
     //boton de insertar
     button = document.createElement("button");
-    button.class = "button insert";
+    button.className = "button insert";
     button.addEventListener("click", guardar_informacion);
     button.type = "button";
     text = document.createTextNode("Insert");
@@ -278,7 +305,7 @@ function generar_form(){
     
     //boton de resetear
     button = document.createElement("button");
-    button.class = "button insert";
+    button.className = "button insert";
     button.type = "reset";
     text = document.createTextNode("Reset");
     button.appendChild(text);
@@ -286,7 +313,7 @@ function generar_form(){
     
     //boton de cancelar
     button = document.createElement("button");
-    button.class = "button insert";
+    button.className = "button insert";
     button.addEventListener("click", que_tabla_generar);
     button.type = "button";
     text = document.createTextNode("Cancel");
@@ -312,6 +339,10 @@ function borrar_form(){
     while (insert.hasChildNodes()) {
         insert.removeChild(insert.firstChild);
     }
+}
+
+function modificar_tabla(){
+    
 }
 
 //coge todo del formulario y lo pone en el JSON
