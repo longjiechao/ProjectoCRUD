@@ -49,7 +49,7 @@ var character = [
 
 //array de los keys para el array json
 var jsonKey = [
-    "id", "name", "hp", "consumable", "items", "nameImage", "portrait", "costume", "skinColor", "canShoot", "canfly"
+    "id", "name", "hp", "consumable", "items", "nameImage", "portrait", "costume", "skinColor", "canShoot", "canFly"
 ]
 
 //array para mostrar en la tabla commo titulo
@@ -202,6 +202,9 @@ function generar_form(){
     input.placeholder = "HP";
     form.appendChild(input);
     
+    //BR
+    form.appendChild(document.createElement("br"));
+    
     //Consumables
     input = document.createElement("input");
     input.name = "info";
@@ -216,12 +219,16 @@ function generar_form(){
     input.placeholder = "Items";
     form.appendChild(input);
     
+    //BR
+    form.appendChild(document.createElement("br"));
+    
     //Image's Name
     input = document.createElement("input");
     input.name = "info";
     input.type = "file";
     input.placeholder = "Image's Name";
     input.required = true;
+    input.accept = "image/*";
     form.appendChild(input);
     
     //Portrait
@@ -230,7 +237,11 @@ function generar_form(){
     input.type = "file";
     input.placeholder = "Portrait";
     input.required = true;
+    input.accept = "image/*";
     form.appendChild(input);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
     
     //Costume
     input = document.createElement("input");
@@ -276,6 +287,9 @@ function generar_form(){
     
     form.appendChild(select);
     
+    //BR
+    form.appendChild(document.createElement("br"));
+    
     //canShoot
     input = document.createElement("input");
     input.name = "info";
@@ -292,6 +306,8 @@ function generar_form(){
     form.appendChild(input);
     form.appendChild(document.createTextNode("canFly"));
     
+    //BR
+    form.appendChild(document.createElement("br"));
     form.appendChild(document.createElement("br"));
     
     //boton de insertar
@@ -320,8 +336,6 @@ function generar_form(){
     button.appendChild(text);
     form.appendChild(button);
     
-    
-    
     div.appendChild(form);
 }
 
@@ -341,8 +355,170 @@ function borrar_form(){
     }
 }
 
-function modificar_tabla(){
+function modificar_tabla(charact){
+    borrar_tabla();
+    var div = document.getElementById("insert");
+    var form = document.createElement("form");
+    form.setAttribute("class", "form");
+    var input, select, option;
+    var text, h1;
+    var button;
     
+    text = document.createTextNode("ID: " + charact.id + " ");
+    h1 = document.createElement("h1");
+    h1.appendChild(text);
+    form.appendChild(h1);
+    
+    //Name
+    input = document.createElement("input");
+    input.name = "info";
+    input.type = "text";
+    input.placeholder = "Name";
+    input.required = true;
+    form.appendChild(input);
+    
+    //HP
+    input = document.createElement("input");
+    input.name = "info";
+    input.type = "text";
+    input.placeholder = "HP";
+    form.appendChild(input);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    
+    //Consumables
+    input = document.createElement("input");
+    input.name = "info";
+    input.type = "text";
+    input.placeholder = "Consumables";
+    form.appendChild(input);
+    
+    //Items
+    input = document.createElement("input");
+    input.name = "info";
+    input.type = "text";
+    input.placeholder = "Items";
+    form.appendChild(input);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    
+    //Image's Name
+    input = document.createElement("input");
+    input.name = "info";
+    input.type = "file";
+    input.placeholder = "Image's Name";
+    input.required = true;
+    input.accept = "image/*";
+    form.appendChild(input);
+    
+    //Portrait
+    input = document.createElement("input");
+    input.name = "info";
+    input.type = "file";
+    input.placeholder = "Portrait";
+    input.required = true;
+    input.accept = "image/*";
+    form.appendChild(input);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    
+    //Costume
+    input = document.createElement("input");
+    input.name = "info";
+    input.type = "number";
+    input.min = -1;
+    input.placeholder = "Costume";
+    form.appendChild(input);
+    
+    //skinColor
+    select = document.createElement("select");
+    select.name = "info";
+        //options
+        option = document.createElement("option");
+        text = "Default";
+        option.value = text;
+        option.innerHTML = text;
+        select.appendChild(option);
+        
+        option = document.createElement("option");
+        text = "Brown";
+        option.value = text;
+        option.innerHTML = text;
+        select.appendChild(option);
+        
+        option = document.createElement("option");
+        text = "Red";
+        option.value = text;
+        option.innerHTML = text;
+        select.appendChild(option);
+        
+        option = document.createElement("option");
+        text = "Black";
+        option.value = text;
+        option.innerHTML = text;
+        select.appendChild(option);
+        
+        option = document.createElement("option");
+        text = "Green";
+        option.value = text;
+        option.innerHTML = text;
+        select.appendChild(option);
+    
+    form.appendChild(select);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    
+    //canShoot
+    input = document.createElement("input");
+    input.name = "info";
+    input.className = "check";
+    input.type = "checkbox";
+    form.appendChild(input);
+    form.appendChild(document.createTextNode("canShoot"));
+    
+    //canFly
+    input = document.createElement("input");
+    input.name = "info";
+    input.className = "check";
+    input.type = "checkbox";
+    form.appendChild(input);
+    form.appendChild(document.createTextNode("canFly"));
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    form.appendChild(document.createElement("br"));
+    
+    //boton de insertar
+    button = document.createElement("button");
+    button.className = "button insert";
+    button.addEventListener("click", guardar_informacion);
+    button.type = "button";
+    text = document.createTextNode("Insert");
+    button.appendChild(text);
+    form.appendChild(button);
+    
+    //boton de cancelar
+    button = document.createElement("button");
+    button.className = "button insert";
+    button.addEventListener("click", que_tabla_generar);
+    button.type = "button";
+    text = document.createTextNode("Cancel");
+    button.appendChild(text);
+    form.appendChild(button);
+    
+    div.appendChild(form);
+    
+    
+    var insertForm = document.getElementsByName("info");
+    for (i = 0; i <= insertForm.length; i++){
+        if(i != 0){
+            console.log(charact[jsonKey[i]]);
+        }
+    }
 }
 
 //coge todo del formulario y lo pone en el JSON
@@ -370,4 +546,8 @@ function guardar_informacion(){
     character.push(newRegistro);
     borrar_form();
     que_tabla_generar();
+}
+
+function actualizar_informacion(){
+    
 }

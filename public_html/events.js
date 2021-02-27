@@ -38,7 +38,8 @@ function loadAllMod(){
                 var mod = document.getElementsByClassName("mod");
                for(i = 0; i < mod.length; i++){
                    if(mod[i] == e.target){
-                       console.log(i);
+                       console.log(character[i]);
+                       modificar_tabla(character[i]);
                    }
                }
             }

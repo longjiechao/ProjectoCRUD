@@ -73,11 +73,29 @@ input.check {
     
 }
 
+.form{
+    text-align: center;
+}
+
 .form input{
-    width: 110px;
-    padding: 5px;
+    width: 250px;
+    padding: 10px;
     margin: 5px 2px;
 }
+
+.form input[type=checkbox]{
+    width: 50px;
+    padding: 10px;
+    margin: 5px 2px;
+}
+
+.form select{
+    width: 250px;
+    padding: 10px;
+    margin: 5px 2px;
+}
+
+
 
 /* ~~~PLACEHOLDER~~~*/
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -93,11 +111,4 @@ input.check {
   color: white;
 }
 /**/
-
-
-.form select{
-    width: 124px;
-    padding: 5px;
-    margin: 5px 2px;
-}
 
