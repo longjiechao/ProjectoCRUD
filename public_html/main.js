@@ -314,7 +314,7 @@ function generar_form(){
     button = document.createElement("button");
     button.className = "button insert";
     button.addEventListener("click", guardar_informacion);
-    button.type = "button";
+    button.type = "submit";
     text = document.createTextNode("Insert");
     button.appendChild(text);
     form.appendChild(button);
@@ -409,7 +409,6 @@ function modificar_tabla(charact){
     input.name = "info";
     input.type = "file";
     input.placeholder = "Image's Name";
-    input.required = true;
     input.accept = "image/*";
     form.appendChild(input);
     
@@ -418,7 +417,6 @@ function modificar_tabla(charact){
     input.name = "info";
     input.type = "file";
     input.placeholder = "Portrait";
-    input.required = true;
     input.accept = "image/*";
     form.appendChild(input);
     
@@ -492,12 +490,12 @@ function modificar_tabla(charact){
     form.appendChild(document.createElement("br"));
     form.appendChild(document.createElement("br"));
     
-    //boton de insertar
+    //boton de actualizar
     button = document.createElement("button");
     button.className = "button insert";
-    button.addEventListener("click", guardar_informacion);
+    button.addEventListener("click", actualizar_informacion);
     button.type = "button";
-    text = document.createTextNode("Insert");
+    text = document.createTextNode("Actalizar");
     button.appendChild(text);
     form.appendChild(button);
     
@@ -514,9 +512,17 @@ function modificar_tabla(charact){
     
     
     var insertForm = document.getElementsByName("info");
+    var imgName;
+    var imgPortrait;
     for (i = 0; i <= insertForm.length; i++){
-        if(i != 0){
-            console.log(charact[jsonKey[i]]);
+        if(i == 9 || i == 10){
+            insertForm[i-1].checked = charact[jsonKey[i]];
+        }else if(i == 5){
+            imgName = charact[jsonKey[i]];
+        }else if(i ==6){
+            imgPortrait = charact[jsonKey[i]];
+        }else if(i != 0){
+            insertForm[i-1].value = charact[jsonKey[i]];
         }
     }
 }
@@ -549,5 +555,33 @@ function guardar_informacion(){
 }
 
 function actualizar_informacion(){
+    var insertForm = document.getElementsByName("info");
+    var id = document.getElementsByTagName("h1").title;
     
+    for(i = 0; i < character.length; i++){
+        console.log(character[i].id);
+        console.log(id);
+    }
+    
+//    for (i = 0; i < insertForm.length+1; i++){        
+//        switch(i){
+//            case 0:
+//                newRegistro[jsonKey[i-1]] = indexID.getID();
+//                indexID.addID();
+//                break;
+//            case 9: 
+//            case 10:
+//                newRegistro[jsonKey[i-1]] = insertForm[i-1].checked;
+//                break;
+//            default:
+//                var insert = insertForm[i-1].value;
+//                insert = insert.replace(/.*\\/, "");
+//                newRegistro[jsonKey[i-1]] = insert;
+//                break;
+//        }
+//        if(i != 0) console.log("I: " + i + "key: " + jsonKey[i-1] + "  value: " + insertForm[i-1].value);
+//    }
+//    character.push(newRegistro);
+//    borrar_form();
+//    que_tabla_generar();
 }

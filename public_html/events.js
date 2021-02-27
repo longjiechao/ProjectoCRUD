@@ -29,9 +29,9 @@ function loadAllDeleteDoubleClick(){
     }
 }
 
+//carga todos los eventos para modificar una entrada
 function loadAllMod(){
     var mod = document.getElementsByClassName("mod");
-    console.log(mod);
     for(i = 0; i < mod.length; i++){
         mod[i].addEventListener("keypress", function(e){
             if(e.keyCode === 13){
