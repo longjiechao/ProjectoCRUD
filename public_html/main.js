@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//      (\d{0,4})?(,\d{0,4})*
-//      \d(:\d)?
-//      (B\d)?(K\d)?(C\d)?
+//item      (\d{0,4})?(,\d{0,4})*
+//vida:escudo      \d(:\d)?
+//consumable      (B\d)?(K\d)?(C\d)?
 
 
 window.onload = function(){
@@ -42,8 +42,34 @@ var indexID = {
 
 //array json donde se guarda las entradas
 var character = [
-    {id:1, name: "Isaac", hp:6, consumable:1, items:105, nameImage:"playername_01_isaac.png", portrait:"playerportraitbig_01_isaac.png", costume:-1, skinColor:"Default", canShoot:true, canFly:false},
-    {id:2, name: "Magdalene", hp:8, consumable:1, items:45, nameImage:"playername_02_magdalene.png", portrait:"playerportraitbig_02_magdalene.png", costume:-1, skinColor:"Default", canShoot:true, canFly:false}
+    {id:1,
+        name: "Isaac",
+        hp:6, consumable:"B1",
+        items:[
+            {   id:105,
+                img: "Collectibles_105_Dice.png",
+                name:"The D6",
+                descripcion:"Reroll your destiny",
+                cargas: 6,
+                tipo:"activa", }
+        ],
+        nameImage:"playername_01_isaac.png",
+        portrait:"playerportraitbig_01_isaac.png",
+        costume:-1,
+        skinColor:"Default",
+        canShoot:true,
+        canFly:false},
+    {id:2,
+        name:"Magdalene",
+        hp:8,
+        consumable:"",
+        items:"",
+        nameImage:"playername_02_magdalene.png",
+        portrait:"playerportraitbig_02_magdalene.png",
+        costume:-1,
+        skinColor:"Default",
+        canShoot:true,
+        canFly:false}
 ];
 
 //array de los keys para el array json
@@ -133,16 +159,35 @@ function generar_tabla() {
                     button.className = "mod";
                     td.appendChild(button);
                     break;
+                case 4:
+                    if(characterValue[i] == ""){
+                        var text = document.createTextNode(characterValue[i]);
+                        td.appendChild(text);
+                    }else{
+                        var button = document.createElement("button");
+                        var text = document.createTextNode("Ver más...");
+                        button.appendChild(text);
+                        button.type = "button";
+                        button.className = "showItem";
+                        td.appendChild(button);
+                    }
+                    break;
                 case 5:
                     var img = document.createElement("img");
                     img.src = "gfx/nameImage/"+characterValue[i];
                     img.style['pointer-events'] = 'none';
+                    img.onerror = function(){
+                        this.src = "gfx/nameImage/default.png";
+                    }
                     td.appendChild(img);
                     break;
                 case 6:
                     var img = document.createElement("img");
                     img.src = "gfx/playerPortrairBig/"+characterValue[i];
                     img.style['pointer-events'] = 'none';
+                    img.onerror = function(){
+                        this.src = "gfx/playerPortrairBig/default.png";
+                    }
                     td.appendChild(img);
                     break;
                     
@@ -151,15 +196,12 @@ function generar_tabla() {
                     td.appendChild(text);
                     break;
             }
-
             tr.appendChild(td);
         }
         tbody.appendChild(tr);
     }
-    
     tabla.appendChild(tbody);
     div.appendChild(tabla);
-    
      //boton de insertar
     var button = document.createElement("button");
     button.className = "button insert";
@@ -168,9 +210,6 @@ function generar_tabla() {
     text = document.createTextNode("Insertar");
     button.appendChild(text);
     div.appendChild(button);
-    
-    //para generar los botones de borrar las entradas
-//    borrar_entrada();
     
     //Recarga todos los eventos
     loadAllEvents();
@@ -201,6 +240,7 @@ function generar_form(){
     input = document.createElement("input");
     input.name = "info";
     input.type = "text";
+    input.pattern = "[0-9](:[0-9])?";
     input.placeholder = "HP";
     form.appendChild(input);
     
@@ -211,6 +251,7 @@ function generar_form(){
     input = document.createElement("input");
     input.name = "info";
     input.type = "text";
+    input.pattern = "(B[0-9])?(K[0-9])?(C[0-9])?";
     input.placeholder = "Consumables";
     form.appendChild(input);
     
@@ -316,7 +357,7 @@ function generar_form(){
     button = document.createElement("button");
     button.className = "button insert";
     button.addEventListener("click", guardar_informacion);
-    button.type = "submit";
+    button.type = "button";
     text = document.createTextNode("Insert");
     button.appendChild(text);
     form.appendChild(button);
@@ -383,6 +424,7 @@ function modificar_tabla(charact){
     input = document.createElement("input");
     input.name = "info";
     input.type = "text";
+    input.pattern = "[0-9](:[0-9])?";
     input.placeholder = "HP";
     form.appendChild(input);
     
@@ -393,6 +435,7 @@ function modificar_tabla(charact){
     input = document.createElement("input");
     input.name = "info";
     input.type = "text";
+    input.pattern = "(B[0-9])?(K[0-9])?(C[0-9])?";
     input.placeholder = "Consumables";
     form.appendChild(input);
     
@@ -496,7 +539,7 @@ function modificar_tabla(charact){
     button = document.createElement("button");
     button.className = "button insert";
     button.addEventListener("click", actualizar_informacion);
-    button.type = "button";
+    button.type = "submit";
     text = document.createTextNode("Actalizar");
     button.appendChild(text);
     form.appendChild(button);
@@ -529,6 +572,7 @@ function modificar_tabla(charact){
 
 //coge todo del formulario y lo pone en el JSON
 function guardar_informacion(){
+    var form  = document.getElementsByClassName("form");
     var insertForm = document.getElementsByName("info");
     var newRegistro = {};
     for (i = 0; i < insertForm.length+1; i++){
@@ -598,6 +642,4 @@ function actualizar_informacion(){
             que_tabla_generar();
         }
     }
-    
-    
 }

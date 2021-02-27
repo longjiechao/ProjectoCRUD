@@ -37,13 +37,29 @@ function loadAllMod(){
         mod[i].addEventListener("keypress", function(e){
             if(e.keyCode === 13){
                 var mod = document.getElementsByClassName("mod");
-               for(i = 0; i < mod.length; i++){
+                for(i = 0; i < mod.length; i++){
                    if(mod[i] == e.target){
                        console.log(character[i]);
                        modificar_tabla(character[i]);
                    }
                }
             }
+        });
+    }
+}
+
+//crea todos los eventos para mostrar la tabla con su subtabla
+function loadAllSubTable(){
+    var showItem = document.getElementsByClassName("showItem");
+    for(i = 0; i < mod.length; i++){
+        showItem[i].addEventListener("click", function(e){
+            var showItem = document.getElementsByClassName("showItem");
+                for(i = 0; i < mod.length; i++){
+                   if(showItem[i] == e.target){
+                       console.log(character[i]);
+                       modificar_tabla(character[i]);
+                   }
+               }
         });
     }
 }
