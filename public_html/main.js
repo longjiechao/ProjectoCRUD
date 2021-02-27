@@ -11,7 +11,6 @@
 window.onload = function(){
     que_tabla_generar();
     indexID.setCurID();
-    loadAllMod();
 };
 
 //gestiona el tema del ID
@@ -556,7 +555,7 @@ function guardar_informacion(){
 
 function actualizar_informacion(){
     var insertForm = document.getElementsByName("info");
-    var id = document.getElementsByTagName("h1").title;
+    var id = document.getElementsByTagName("h1")[0].textContent.replace("ID: ", "");;
     
     for(i = 0; i < character.length; i++){
         console.log(character[i].id);

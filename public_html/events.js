@@ -7,6 +7,7 @@
 //recarga todos los eventos
 function loadAllEvents(){
     loadAllDeleteDoubleClick();
+    loadAllMod();
 }
 
 //recarga todos los botones de eliminar del 
