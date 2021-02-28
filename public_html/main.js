@@ -40,6 +40,9 @@ var indexID = {
     }
 };
 
+var itemTitulo = ["ID", "Imagen", "Nombre", "Descripción", "Cargas", "Tipo"];
+var itemJSON = ["id", "img", "name", "ecripcion", "cargas", "tipo"];
+
 //array json donde se guarda las entradas
 var character = [
     {id:1,
@@ -51,7 +54,7 @@ var character = [
                 name:"The D6",
                 descripcion:"Reroll your destiny",
                 cargas: 6,
-                tipo:"activa", }
+                tipo:"activa"}
         ],
         nameImage:"playername_01_isaac.png",
         portrait:"playerportraitbig_01_isaac.png",
@@ -145,14 +148,15 @@ function generar_tabla() {
     //Poner los elementos en la tabla, cogiendo del JSON
     for(i in character){
         var tr = document.createElement("tr");
+        tr.className = "entrada";
         var characterValue = Object.values(character[i]);
-        for (i = 0; i < characterValue.length; i++){
+        for (y = 0; y < characterValue.length; y++){
             var td =  document.createElement("td");
             
             //El switch sirve para los imagenes
-            switch(i){
+            switch(y){
                 case 0:
-                    var text = document.createTextNode(characterValue[i]);
+                    var text = document.createTextNode(characterValue[y]);
                     var button = document.createElement("button");
                     button.appendChild(text);
                     button.type = "button";
@@ -160,21 +164,45 @@ function generar_tabla() {
                     td.appendChild(button);
                     break;
                 case 4:
-                    if(characterValue[i] == ""){
-                        var text = document.createTextNode(characterValue[i]);
-                        td.appendChild(text);
+                    if(characterValue[y] == ""){
+                        var button = document.createElement("button");
+                        var text = document.createTextNode("Añadir...");
+                        button.appendChild(text);
+                        button.type = "button";
+                        button.className = "showItem";
+                        button.addEventListener("click", function(e){
+                            var table = e.target.parentNode.parentNode.parentNode;
+                            var curTr = e.target.parentNode.parentNode;
+                            for(i = 0; i < table.childElementCount; i++){
+                                if(table.childNodes[i] === curTr){
+                                    generar_subtabla(i-1);
+                                }
+                            };
+                        });
+                        td.appendChild(button);
                     }else{
                         var button = document.createElement("button");
                         var text = document.createTextNode("Ver más...");
                         button.appendChild(text);
                         button.type = "button";
                         button.className = "showItem";
+                        button.addEventListener("click", function(e){
+                            var table = e.target.parentNode.parentNode.parentNode;
+                            var curTr = e.target.parentNode.parentNode;
+                            for(i = 0; i < table.childElementCount; i++){
+                                if(table.childNodes[i] === curTr){
+                                    generar_subtabla(i-1);
+                                    console.log(character[i-1]);
+                                }
+                            };
+                            
+                        });
                         td.appendChild(button);
                     }
                     break;
                 case 5:
                     var img = document.createElement("img");
-                    img.src = "gfx/nameImage/"+characterValue[i];
+                    img.src = "gfx/nameImage/"+characterValue[y];
                     img.style['pointer-events'] = 'none';
                     img.onerror = function(){
                         this.src = "gfx/nameImage/default.png";
@@ -183,7 +211,7 @@ function generar_tabla() {
                     break;
                 case 6:
                     var img = document.createElement("img");
-                    img.src = "gfx/playerPortrairBig/"+characterValue[i];
+                    img.src = "gfx/playerPortrairBig/"+characterValue[y];
                     img.style['pointer-events'] = 'none';
                     img.onerror = function(){
                         this.src = "gfx/playerPortrairBig/default.png";
@@ -192,7 +220,7 @@ function generar_tabla() {
                     break;
                     
                 default:
-                    var text = document.createTextNode(characterValue[i]);
+                    var text = document.createTextNode(characterValue[y]);
                     td.appendChild(text);
                     break;
             }
@@ -382,6 +410,107 @@ function generar_form(){
     div.appendChild(form);
 }
 
+//Genera la subtabla (el de los ITEMS)
+function generar_subtabla(num){
+    borrar_tabla();
+    // Obtener la referencia del elemento body
+    var div = document.getElementById("table");
+
+    // Crea un elemento <table> y un elemento <tbody>
+    var tabla = document.createElement("table");
+    tabla.setAttribute("class", "table");
+    var tbody = document.createElement("tbody");
+  
+  //Poner el titulo de la tabla
+    var tr = document.createElement("tr");
+    for (var i = 0; i < titulo.length; i++) {
+        var celda = document.createElement("th");
+        var text = document.createTextNode(titulo[i]);
+        celda.appendChild(text);
+        tr.appendChild(celda);
+    }
+    tbody.appendChild(tr);
+    
+    //Poner los elementos en la tabla, cogiendo del JSON
+    var tr = document.createElement("tr");
+    var characterValue = Object.values(character[num]);
+    for (y = 0; y < characterValue.length; y++){
+        var td =  document.createElement("td");
+
+        //El switch sirve para los imagenes
+        switch(y){
+            case 0:
+                var text = document.createTextNode(characterValue[y]);
+                var button = document.createElement("button");
+                button.appendChild(text);
+                button.type = "button";
+                button.className = "mod";
+                td.appendChild(button);
+                break;
+            case 4:
+                if(characterValue[y] == ""){
+                    var text = document.createTextNode("Vacío...");
+                    td.appendChild(text);
+                }else{
+                    var text = document.createTextNode("");
+                    td.appendChild(text);
+                }
+                break;
+            case 5:
+                var img = document.createElement("img");
+                img.src = "gfx/nameImage/"+characterValue[y];
+                img.style['pointer-events'] = 'none';
+                img.onerror = function(){
+                    this.src = "gfx/nameImage/default.png";
+                }
+                td.appendChild(img);
+                break;
+            case 6:
+                var img = document.createElement("img");
+                img.src = "gfx/playerPortrairBig/"+characterValue[y];
+                img.style['pointer-events'] = 'none';
+                img.onerror = function(){
+                    this.src = "gfx/playerPortrairBig/default.png";
+                }
+                td.appendChild(img);
+                break;
+
+            default:
+                var text = document.createTextNode(characterValue[y]);
+                td.appendChild(text);
+                break;
+        }
+        tr.appendChild(td);
+    }
+    
+    var div = document.getElementById("subTable");
+    
+    
+    tbody.appendChild(tr);
+    tabla.appendChild(tbody);
+    div.appendChild(tabla);
+     //boton de insertar
+    var button = document.createElement("button");
+    button.className = "button insert";
+    button.addEventListener("click", generar_subForm);
+    button.type = "button";
+    text = document.createTextNode("Insertar");
+    button.appendChild(text);
+    div.appendChild(button);
+    
+    //Recarga todos los eventos
+    loadAllEvents();
+    
+    // modifica el atributo "border" de la tabla y lo fija a "2";
+    tabla.setAttribute("border", "2");
+}
+
+//Genera formulario para la subtabla
+function generar_subForm(){
+    
+}
+
+
 //Borra la tabla
 function borrar_tabla(){
     var table = document.getElementById("table");
@@ -393,6 +522,13 @@ function borrar_tabla(){
 //Borra el formulario
 function borrar_form(){
     var insert = document.getElementById("insert");
+    while (insert.hasChildNodes()) {
+        insert.removeChild(insert.firstChild);
+    }
+}
+
+function borrar_subEntrada(){
+    var insert = document.getElementById("subTable");
     while (insert.hasChildNodes()) {
         insert.removeChild(insert.firstChild);
     }

@@ -12,14 +12,14 @@ function loadAllEvents(){
 
 //recarga todos los botones de eliminar del 
 function loadAllDeleteDoubleClick(){
-    var tr = document.getElementsByTagName("tr");
-    for(i = 1; i < tr.length; i++){
+    var tr = document.getElementsByClassName("entrada");
+    for(i = 0; i < tr.length; i++){
         tr[i].addEventListener("dblclick", function(e){
-            var tr = document.getElementsByTagName("tr");
-            for(i = 1; i < tr.length; i++){
+            var tr = document.getElementsByClassName("entrada");
+            for(i = 0; i < tr.length; i++){
                 if(tr[i] === e.target.parentNode){
                     e.target.parentNode.parentNode.removeChild(e.target.parentNode);
-                    character.splice(i-1, 1);
+                    character.splice(i, 1);
                     if(poder_generar_tabla()){
                         borrar_tabla();
                         generar_tabla_vacia();
@@ -49,17 +49,16 @@ function loadAllMod(){
 }
 
 //crea todos los eventos para mostrar la tabla con su subtabla
-function loadAllSubTable(){
-    var showItem = document.getElementsByClassName("showItem");
-    for(i = 0; i < mod.length; i++){
-        showItem[i].addEventListener("click", function(e){
-            var showItem = document.getElementsByClassName("showItem");
-                for(i = 0; i < mod.length; i++){
-                   if(showItem[i] == e.target){
-                       console.log(character[i]);
-                       modificar_tabla(character[i]);
-                   }
-               }
-        });
-    }
-}
+//function loadAllSubTable(){
+//    var showItem = document.getElementsByClassName("showItem");
+//    for(i = 0; i < mod.length; i++){
+//        showItem[i].addEventListener("click", function(e){
+//            var showItem = document.getElementsByClassName("showItem");
+//                for(i = 0; i < showItem.length; i++){
+//                   if(showItem[i] == e.target){
+//                       console.log(i);
+//                   }
+//               }
+//        });
+//    }
+//}
