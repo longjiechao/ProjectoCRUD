@@ -483,6 +483,7 @@ function generar_subtabla(num){
         tr.appendChild(td);
     }
     
+    //creacion de la subtabla
     var div = document.getElementById("subTable");
     
     
