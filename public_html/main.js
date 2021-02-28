@@ -40,9 +40,6 @@ var indexID = {
     }
 };
 
-var itemTitulo = ["ID", "Imagen", "Nombre", "Descripción", "Cargas", "Tipo"];
-var itemJSON = ["id", "img", "name", "ecripcion", "cargas", "tipo"];
-
 //array json donde se guarda las entradas
 var character = [
     {id:1,
@@ -84,6 +81,10 @@ var jsonKey = [
 var titulo = [
     "ID", "Name", "HP", "Consumables", "Items", "Image's Name", "Portrait", "Costume",  "Skin Color", "Shoot", "Fly"
 ];
+
+//lo mismo que arriba, pero para los ITEMS
+var itemTitulo = ["ID", "Imagen", "Nombre", "Descripción", "Cargas", "Tipo"];
+var itemJSON = ["id", "img", "name", "ecripcion", "cargas", "tipo"];
 
 //Un pequeño array que lo utilizo para guardas 2 imagenes, necesitaba variables globales
 var imgMod = [];
@@ -482,15 +483,14 @@ function generar_subtabla(num){
         }
         tr.appendChild(td);
     }
-    
-    //creacion de la subtabla
-    var div = document.getElementById("subTable");
-    
-    
     tbody.appendChild(tr);
     tabla.appendChild(tbody);
     div.appendChild(tabla);
-     //boton de insertar
+    div.appendChild(document.createElement("br"));
+    
+    generar_subtabla2(num);
+    
+    //boton de insertar
     var button = document.createElement("button");
     button.className = "button insert";
     button.addEventListener("click", generar_subForm);
@@ -504,6 +504,32 @@ function generar_subtabla(num){
     
     // modifica el atributo "border" de la tabla y lo fija a "2";
     tabla.setAttribute("border", "2");
+}
+
+//genera la segunda la parte del ITEM de las subtablas
+function generar_subtabla2(num){
+    //creacion de la subtabla
+    subdiv = document.getElementById("subTable");
+    
+    subtable = document.createElement("table");
+    subtbody = document.createElement("tbody");
+    
+    subtr = document.createElement("tr");
+    for(i = 0; i < itemTitulo.length; i++){
+        subth = document.createElement("th");
+        subtext = document.createTextNode(itemTitulo[i]);
+        subth.appendChild(subtext);
+        subtr.appendChild(subth);
+    }
+    subtbody.appendChild(subtr);
+    
+    for(i in character[num].items[0]){
+        console.log(character[num].items[0][i]);
+    }
+    
+    subtbody.appendChild(subtr);
+    subtable.appendChild(subtbody);
+    subdiv.appendChild(subtabla);
 }
 
 //Genera formulario para la subtabla
