@@ -7,14 +7,16 @@
 //recarga todos los eventos
 function loadAllEvents(){
     loadAllDeleteDoubleClick();
+    loadAllDeleteDoubleClickSub();
     loadAllMod();
 }
 
-//recarga todos los botones de eliminar del 
+//recarga todos los botones de eliminar de las entradas
 function loadAllDeleteDoubleClick(){
     var tr = document.getElementsByClassName("entrada");
     for(i = 0; i < tr.length; i++){
         tr[i].addEventListener("dblclick", function(e){
+            console.log("a");
             var tr = document.getElementsByClassName("entrada");
             for(i = 0; i < tr.length; i++){
                 if(tr[i] === e.target.parentNode){
@@ -23,6 +25,34 @@ function loadAllDeleteDoubleClick(){
                     if(poder_generar_tabla()){
                         borrar_tabla();
                         generar_tabla_vacia();
+                    }
+                }
+            }
+        });
+    }
+}
+
+
+//recarga todos los botones de eliminar de las subentradas
+function loadAllDeleteDoubleClickSub(){
+    var tr = document.getElementsByClassName("subentrada");
+    for(i = 0; i < tr.length; i++){
+        console.log(i);
+        tr[i].addEventListener("dblclick", function(e){
+            var tr = document.getElementsByClassName("subentrada");
+            var id = document.getElementById("table").firstChild.firstChild.lastChild.firstChild.textContent;
+            for(i = 0; i < tr.length; i++){
+                if(tr[i] === e.target.parentNode){
+                    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+                    for(y = 0; y < character.length; y++){
+                        if(character[y].id == id){
+                            console.log(y);
+                            character[y].items.splice(i, 1);
+                        }
+                    }
+                    if(tr.length == 0){
+                        borrar_subEntrada();
+                        generar_subtabla_vacia();
                     }
                 }
             }

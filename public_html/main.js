@@ -47,7 +47,7 @@ var character = [
         hp:6, consumable:"B1",
         items:[
             {   id:105,
-                img: "Collectibles_105_Dice.png",
+                img: "collectibles_105_Dice.png",
                 name:"The D6",
                 descripcion:"Reroll your destiny",
                 cargas: 6,
@@ -63,19 +63,43 @@ var character = [
         name:"Magdalene",
         hp:8,
         consumable:"",
-        items:"",
+        items: "",
         nameImage:"playername_02_magdalene.png",
         portrait:"playerportraitbig_02_magdalene.png",
         costume:-1,
         skinColor:"Default",
         canShoot:true,
-        canFly:false}
+        canFly:false},
+    {id:10,
+        name:"The Lost",
+        hp:0,
+        consumable:"C1",
+        items:[
+            {   id:284,
+                img: "collectibles_284_d4.png",
+                name:"D4",
+                descripcion:"Reroll into something else",
+                cargas: 6,
+                tipo:"activa"},
+            {   id:313,
+                img: "collectibles_313_holymantle.png",
+                name:"Holy Mantle",
+                descripcion:"Holy shield",
+                cargas: "",
+                tipo:"pasiva"}
+        ],
+        nameImage:"playername_12_thelost.png",
+        portrait:"playerportraitbig_12_thelost.png",
+        costume:-1,
+        skinColor:"Default",
+        canShoot:true,
+        canFly:true}
 ];
 
 //array de los keys para el array json
 var jsonKey = [
     "id", "name", "hp", "consumable", "items", "nameImage", "portrait", "costume", "skinColor", "canShoot", "canFly"
-]
+];
 
 //array para mostrar en la tabla commo titulo
 var titulo = [
@@ -84,7 +108,7 @@ var titulo = [
 
 //lo mismo que arriba, pero para los ITEMS
 var itemTitulo = ["ID", "Imagen", "Nombre", "Descripción", "Cargas", "Tipo"];
-var itemJSON = ["id", "img", "name", "ecripcion", "cargas", "tipo"];
+var itemJSON = ["id", "img", "name", "decripcion", "cargas", "tipo"];
 
 //Un pequeño array que lo utilizo para guardas 2 imagenes, necesitaba variables globales
 var imgMod = [];
@@ -92,6 +116,7 @@ var imgMod = [];
 //decide que tabla generar
 function que_tabla_generar(){
     borrar_form();
+    borrar_subEntrada();
     if(poder_generar_tabla()){
         generar_tabla_vacia();
     }else{
@@ -127,7 +152,7 @@ function generar_tabla_vacia(){
 }
 
 //genera la tabla en el div de tabla
-function generar_tabla() {
+function generar_tabla(){
     // Obtener la referencia del elemento body
     var div = document.getElementById("table");
 
@@ -136,7 +161,7 @@ function generar_tabla() {
     tabla.setAttribute("class", "table");
     var tbody = document.createElement("tbody");
   
-  //Poner el titulo de la tabla
+    //Poner el titulo de la tabla
     var tr = document.createElement("tr");
     for (var i = 0; i < titulo.length; i++) {
         var celda = document.createElement("th");
@@ -150,10 +175,10 @@ function generar_tabla() {
     for(i in character){
         var tr = document.createElement("tr");
         tr.className = "entrada";
+        //transforma una entrada de JSON a array, quitando los keys
         var characterValue = Object.values(character[i]);
         for (y = 0; y < characterValue.length; y++){
             var td =  document.createElement("td");
-            
             //El switch sirve para los imagenes
             switch(y){
                 case 0:
@@ -193,7 +218,6 @@ function generar_tabla() {
                             for(i = 0; i < table.childElementCount; i++){
                                 if(table.childNodes[i] === curTr){
                                     generar_subtabla(i-1);
-                                    console.log(character[i-1]);
                                 }
                             };
                             
@@ -289,6 +313,7 @@ function generar_form(){
     input.name = "info";
     input.type = "text";
     input.placeholder = "Items";
+    input.disabled = "true";
     form.appendChild(input);
     
     //BR
@@ -487,20 +512,32 @@ function generar_subtabla(num){
     tabla.appendChild(tbody);
     div.appendChild(tabla);
     div.appendChild(document.createElement("br"));
-    
-    generar_subtabla2(num);
-    
-    //boton de insertar
+    if(characterValue[4] == "" || characterValue[4].length == 0){
+        generar_subtabla_vacia();
+    }else{
+        generar_subtabla2(num);
+    }
+    //boton para salir
     var button = document.createElement("button");
     button.className = "button insert";
     button.addEventListener("click", generar_subForm);
     button.type = "button";
-    text = document.createTextNode("Insertar");
+    text = document.createTextNode("Insertar ITEM");
     button.appendChild(text);
     div.appendChild(button);
     
-    //Recarga todos los eventos
-    loadAllEvents();
+    //boton para salir
+    var button = document.createElement("button");
+    button.className = "button delete";
+    button.addEventListener("click", function(){
+        borrar_subEntrada();
+        borrar_tabla();
+        que_tabla_generar();
+    });
+    button.type = "button";
+    text = document.createTextNode("Salir");
+    button.appendChild(text);
+    div.appendChild(button);
     
     // modifica el atributo "border" de la tabla y lo fija a "2";
     tabla.setAttribute("border", "2");
@@ -509,34 +546,213 @@ function generar_subtabla(num){
 //genera la segunda la parte del ITEM de las subtablas
 function generar_subtabla2(num){
     //creacion de la subtabla
-    subdiv = document.getElementById("subTable");
+    var div = document.getElementById("subTable");
+    var table = document.createElement("table");
+    table.setAttribute("class", "table");
+    var tbody = document.createElement("tbody");
     
-    subtable = document.createElement("table");
-    subtbody = document.createElement("tbody");
-    
-    subtr = document.createElement("tr");
+    var tr = document.createElement("tr");
     for(i = 0; i < itemTitulo.length; i++){
-        subth = document.createElement("th");
-        subtext = document.createTextNode(itemTitulo[i]);
-        subth.appendChild(subtext);
-        subtr.appendChild(subth);
+        var th = document.createElement("th");
+        var text = document.createTextNode(itemTitulo[i]);
+        th.appendChild(text);
+        tr.appendChild(th);
     }
-    subtbody.appendChild(subtr);
+    tbody.appendChild(tr);
     
-    for(i in character[num].items[0]){
-        console.log(character[num].items[0][i]);
+    for(i = 0; i < character[num].items.length; i++){
+        tr = document.createElement("tr");
+        tr.className = "subentrada";
+        for(y in character[num].items[i]){
+            td = document.createElement("td");
+            if(y == "img"){
+                var img = document.createElement("img");
+                img.src = "gfx/item/"+ character[num].items[i][y];
+                img.style['pointer-events'] = 'none';
+                img.onerror = function(){
+                    this.src = "gfx/item/default.png";
+                };
+                td.appendChild(img);
+            }else{
+                text = document.createTextNode(character[num].items[i][y]);
+                td.appendChild(text);
+            }
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
     }
+    table.appendChild(tbody);
+    table.setAttribute("border", "2");
+    div.appendChild(table);
     
-    subtbody.appendChild(subtr);
-    subtable.appendChild(subtbody);
-    subdiv.appendChild(subtabla);
+    //recarga todos los eventos
+    loadAllEvents();
+    
+}
+
+function generar_subtabla_vacia(){
+    var div = document.getElementById("subTable");
+    var h3 = document.createElement("h3");
+    var text = document.createTextNode("No hay ningún ITEM, por favor inserte una");
+    h3.appendChild(text);
+    div.appendChild(h3);
 }
 
 //Genera formulario para la subtabla
 function generar_subForm(){
+    borrar_subEntrada();
+    var div = document.getElementById("subinsert");
+    var form = document.createElement("form");
+    form.setAttribute("class", "form");
+    var input, select, option;
+    var text;
+    var button;
     
-}
+    //ID
+    input = document.createElement("input");
+    input.className = "subinfo";
+    input.type = "text";
+    input.placeholder = "ID";
+    input.required = true;
+    form.appendChild(input);
+    
+    //Image
+    input = document.createElement("input");
+    input.className = "subinfo";
+    input.type = "file";
+    input.placeholder = "Image";
+    input.required = true;
+    input.accept = "image/*";
+    form.appendChild(input);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    
+    //Nombre
+    input = document.createElement("input");
+    input.className = "subinfo";
+    input.type = "text";
+    input.placeholder = "Nombre";
+    input.required = true;
+    form.appendChild(input);
+    
+    //Descripcion
+    input = document.createElement("input");
+    input.className = "subinfo";
+    input.type = "text";
+    input.placeholder = "Descripcion";
+    input.required = true;
+    form.appendChild(input);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    
+    //cargas
+    input = document.createElement("input");
+    input.className = "subinfo";
+    input.type = "number";
+    input.min = -1;
+    input.max = 12;
+    input.value = -1;
+    input.placeholder = "Cargas";
+    input.disabled = true;
+    form.appendChild(input);
 
+    
+    //tipo
+    select = document.createElement("select");
+    select.className = "subinfo";
+        //options
+        option = document.createElement("option");
+        text = "Pasiva";
+        option.value = "pasive";
+        option.innerHTML = text;
+        select.appendChild(option);
+        
+        option = document.createElement("option");
+        text = "Activa";
+        option.value = "active";
+        option.innerHTML = text;
+        select.appendChild(option);
+    
+    select.addEventListener("change", function(e){
+        if(e.target.value == "active"){
+            e.target.previousSibling.disabled = false;
+            e.target.previousSibling.required = true;
+        }else{
+            e.target.previousSibling.disabled = true;
+            e.target.previousSibling.required = false;
+        }
+    });
+    
+    form.appendChild(select);
+    
+    //BR
+    form.appendChild(document.createElement("br"));
+    form.appendChild(document.createElement("br"));
+    
+    //boton de insertar
+    button = document.createElement("button");
+    button.className = "button insert";
+    button.addEventListener("click", function(e){
+        var insertForm = document.getElementsByClassName("subinfo");
+        var newRegistro = {};
+        for (i = 0; i < insertForm.length; i++){
+            var insert = insertForm[i].value;
+            insert = insert.replace(/.*\\/, "");
+            newRegistro[itemJSON[i]] = insert;
+        }
+        
+        var id = document.getElementById("table").firstChild.firstChild.lastChild.firstChild.textContent;
+        for(i = 0; i < character.length; i++){
+            console.log("Charid" + character[i].id);
+            console.log("ID" + id);
+            if(character[i].id == id){
+                if(character[i].items == "" || character[i].items.length == 0){
+                    newRegistro = [newRegistro];
+                    character[i].items = newRegistro;
+                }else{
+                    character[i].items.push(newRegistro);
+                }
+                
+                borrar_tabla();
+                borrar_subform();
+                generar_subtabla(i);
+            }
+        }
+        
+        //generar_subtabla();
+    });
+    button.type = "button";
+    text = document.createTextNode("Insert");
+    button.appendChild(text);
+    form.appendChild(button);
+    
+    //boton de resetear
+    button = document.createElement("button");
+    button.className = "button insert";
+    button.type = "reset";
+    text = document.createTextNode("Reset");
+    button.appendChild(text);
+    form.appendChild(button);
+    
+    //boton de cancelar
+    button = document.createElement("button");
+    button.className = "button insert";
+    button.addEventListener("click", function(){
+        borrar_tabla();
+        borrar_subEntrada();
+        borrar_form();
+        borrar_subform();
+        que_tabla_generar();
+    });
+    button.type = "button";
+    text = document.createTextNode("Cancel");
+    button.appendChild(text);
+    form.appendChild(button);
+    
+    div.appendChild(form);
+}
 
 //Borra la tabla
 function borrar_tabla(){
@@ -554,8 +770,17 @@ function borrar_form(){
     }
 }
 
+//borrar subtabla
 function borrar_subEntrada(){
     var insert = document.getElementById("subTable");
+    while (insert.hasChildNodes()) {
+        insert.removeChild(insert.firstChild);
+    }
+}
+
+//borrar subform
+function borrar_subform(){
+    var insert = document.getElementById("subinsert");
     while (insert.hasChildNodes()) {
         insert.removeChild(insert.firstChild);
     }
@@ -606,6 +831,7 @@ function modificar_tabla(charact){
     input = document.createElement("input");
     input.name = "info";
     input.type = "text";
+    input.disabled = "true";
     input.placeholder = "Items";
     form.appendChild(input);
     
@@ -709,7 +935,7 @@ function modificar_tabla(charact){
     
     //boton de cancelar
     button = document.createElement("button");
-    button.className = "button insert";
+    button.className = "button delete";
     button.addEventListener("click", que_tabla_generar);
     button.type = "button";
     text = document.createTextNode("Cancel");
@@ -735,7 +961,6 @@ function modificar_tabla(charact){
 
 //coge todo del formulario y lo pone en el JSON
 function guardar_informacion(){
-    var form  = document.getElementsByClassName("form");
     var insertForm = document.getElementsByName("info");
     var newRegistro = {};
     for (i = 0; i < insertForm.length+1; i++){
@@ -754,12 +979,13 @@ function guardar_informacion(){
                 newRegistro[jsonKey[i-1]] = insert;
                 break;
         }
-        if(i != 0) console.log("I: " + i + "key: " + jsonKey[i-1] + "  value: " + insertForm[i-1].value);
+        if(i != 0)console.log("I: " + i + "key: " + jsonKey[i-1] + "  value: " + insertForm[i-1].value);
     }
     character.push(newRegistro);
     borrar_form();
     que_tabla_generar();
 }
+
 
 function actualizar_informacion(){
     var id = document.getElementsByTagName("h1")[0].textContent.replace("ID: ", "");

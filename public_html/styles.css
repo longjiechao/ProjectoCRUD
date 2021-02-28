@@ -57,6 +57,16 @@ and open the template in the editor.
     border-color: gray;
 }
 
+.edit {
+    background-color: orange;
+    border-color: orange;
+}
+
+.edit:hover {
+    background-color: gray;
+    border-color: gray;
+}
+
 .delete {
     background-color: red;
     border-color: red;
